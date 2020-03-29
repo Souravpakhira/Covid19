@@ -7,7 +7,7 @@ url = "https://www.mohfw.gov.in/"
 app = Flask(__name__)
 
 
-@app.route('/api')
+@app.route('/')
 def index():
     page = requests.get(url)
     soup = BeautifulSoup(page.text, "html.parser")
