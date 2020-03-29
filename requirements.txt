@@ -1,3 +1,5 @@
 flask
 requests
 bs4
+gunicron
+Werkzeug==1.0.0
