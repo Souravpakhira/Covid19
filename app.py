@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, redirect, request
+from flask_cors import CORS
 import json
 import requests
 from bs4 import BeautifulSoup
 url = "https://www.mohfw.gov.in/"
 
 app = Flask(__name__)
+CORS(app)
 # app.config['JSON_SORT_KEYS'] = False
 
 
