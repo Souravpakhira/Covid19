@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 url = "https://www.mohfw.gov.in/"
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # for cross site request
 # app.config['JSON_SORT_KEYS'] = False
 
 
@@ -26,22 +26,31 @@ def index():
             res.append(myData[i])
 
     final = []
+    total = []
     i = 5
     while i < len(res)-7:
         temp = []
         for j in range(5):
             temp.append(res[i+j])
-        final.append(temp[:])
+        final.append(temp[-4:])  # to get only last 4 element
         i += 5
+    # For the last element which contain total no
+    total.append(res[-3:])
 
-    label = ["Sr.no", "Name of State",
-             "Total Confirmed cases (Indian National)", "Total Confirmed cases ( Foreign National )", "Cured", "Death"]
+    label = [
+        "Name", "Confirmed", "Cured", "Death"]
 
     l = []
     for i in final:
         d = dict(zip(label, i))
         l.append(d)
-    return jsonify({"state": l})
+
+    tlabel = ["Total_Confirmed", "Total_Cured", "Total_Death"]
+    t = []
+    for i in total:
+        d = dict(zip(tlabel, i))
+        t.append(d)
+    return jsonify({"state": l, "total": t})
 
 
 if __name__ == '__main__':
