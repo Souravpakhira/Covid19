@@ -9,9 +9,13 @@ app = Flask(__name__)
 CORS(app)  # for cross site request
 # app.config['JSON_SORT_KEYS'] = False
 
+final = []
+total = []
+l = []
+t = []
 
-@app.route('/')
-def index():
+
+def scrape():
     page = requests.get(url)
     soup = BeautifulSoup(page.text, "html.parser")
     myData = ""
@@ -25,7 +29,9 @@ def index():
         if myData[i]:
             res.append(myData[i])
 
+    global final
     final = []
+    global total
     total = []
     i = 5
     while i < len(res)-7:
@@ -40,17 +46,47 @@ def index():
     label = [
         "Name", "Confirmed", "Cured", "Death"]
 
+    global l
     l = []
     for i in final:
         d = dict(zip(label, i))
         l.append(d)
 
     tlabel = ["Total_Confirmed", "Total_Cured", "Total_Death"]
+
+    global t
     t = []
     for i in total:
         d = dict(zip(tlabel, i))
         t.append(d)
-    return jsonify({"state": l, "total": t})
+
+
+@app.route('/')
+def index():
+    return "use "+request.url + "state <br>" "use " + request.url + "state/[name] <br>" "use " + request.url+"total"
+
+
+@app.route('/state')
+def state_f():
+    scrape()
+    return jsonify({"state": l})
+
+
+@app.route("/state/<name>")
+def state(name):
+    scrape()
+    for i in final:
+        for j in i:
+            if j.lower() == name.lower():
+                return jsonify({"Name": i[0], "Confirmed": i[1], "Cured": i[2], "Death": i[3]})
+    return "Bad Request"
+
+
+@app.route("/total")
+def t_value():
+    scrape()
+    for i in total:
+        return jsonify({"Confirmed": i[0], "Cured": i[1], "Death": i[2]})
 
 
 if __name__ == '__main__':
