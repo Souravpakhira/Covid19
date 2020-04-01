@@ -19,7 +19,7 @@ def scrape():
     page = requests.get(url)
     soup = BeautifulSoup(page.text, "html.parser")
     myData = ""
-    for tr in soup.find(id="cases").find_all('tr'):
+    for tr in soup.find(id="state-data").find_all('tr'):
         myData += tr.get_text()
 
     myData = myData.split('\n')
