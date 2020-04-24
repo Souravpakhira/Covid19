@@ -66,13 +66,13 @@ def index():
     return "use "+request.url + "state <br>" "use " + request.url + "state/[name] <br>" "use " + request.url+"total"
 
 
-@app.route('/state')
+@app.route('/api/state')
 def state_f():
     scrape()
     return jsonify({"state": l})
 
 
-@app.route("/state/<name>")
+@app.route("/api/state/<name>")
 def state(name):
     scrape()
     for i in final:
@@ -82,7 +82,7 @@ def state(name):
     return "Bad Request"
 
 
-@app.route("/total")
+@app.route("/api")
 def t_value():
     scrape()
     for i in total:
