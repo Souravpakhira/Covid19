@@ -21,6 +21,9 @@ def scrape():
     myData = ""
     for tr in soup.find(id="state-data").find_all('tr'):
         myData += tr.get_text()
+    ti = soup.find(id="site-dashboard").find(class_='status-update').find("span").text
+    global time_update
+    time_update = ti[7:21]
 
     myData = myData.split('\n')
 
@@ -41,7 +44,7 @@ def scrape():
         final.append(temp[-4:])  # to get only last 4 element
         i += 5
     # For the last element which contain total no
-    total.append(res[-5:])
+    total.append(res[-6:])
 
     label = [
         "Name", "Confirmed", "Cured", "Death"]
@@ -85,8 +88,11 @@ def state(name):
 @app.route("/api")
 def t_value():
     scrape()
+    total_data = []
     for i in total:
-        return jsonify({"Confirmed": i[0], "Cured": i[1], "Death": i[2]})
+        for j in range(0, 3):
+            total_data.append(i[j])
+    return jsonify({"Confirmed": total_data[0], "Cured": total_data[1], "Death": total_data[2], "lastUpdate": time_update})
 
 
 if __name__ == '__main__':
