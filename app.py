@@ -66,8 +66,7 @@ def scrape():
 
 @app.route('/')
 def index():
-    return "use "+request.url + "state <br>" "use " + request.url + "state/[name] <br>" "use " + request.url+"total"
-
+    return "use "+request.url + "api/state <br>" "use " + request.url + "api/state/[name] <br>" "use " + request.url+"api"
 
 @app.route('/api/state')
 def state_f():
