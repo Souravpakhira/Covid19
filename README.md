@@ -4,9 +4,9 @@ Here is the link for the api https://souravcovid19api.herokuapp.com/
 
 ![](CoronaTracker.png)
 # Routes
-* /state : gives the data of all the state of India.
-* /state/[statename] : gives the data of that state.
-* /total : gives the total count.
+* /api/state : gives the data of all the state of India.
+* /api/state/[statename] : gives the data of that state.
+* /api : gives the total count.
 
 # ShowCase
 
