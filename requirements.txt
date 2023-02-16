@@ -2,5 +2,5 @@ flask
 requests
 bs4
 gunicorn==19.9.0
-Werkzeug==1.0.0
+Werkzeug==2.2.3
 flask-cors
